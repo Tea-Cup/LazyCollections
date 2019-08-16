@@ -29,6 +29,23 @@
     "sstream": "cpp",
     "tuple": "cpp",
     "utility": "cpp",
-    "memory": "cpp"
+    "memory": "cpp",
+    "cstddef": "cpp",
+    "atomic": "cpp",
+    "bitset": "cpp",
+    "chrono": "cpp",
+    "cmath": "cpp",
+    "condition_variable": "cpp",
+    "cstring": "cpp",
+    "ctime": "cpp",
+    "deque": "cpp",
+    "optional": "cpp",
+    "string_view": "cpp",
+    "future": "cpp",
+    "iomanip": "cpp",
+    "mutex": "cpp",
+    "numeric": "cpp",
+    "ratio": "cpp",
+    "thread": "cpp"
   }
 }

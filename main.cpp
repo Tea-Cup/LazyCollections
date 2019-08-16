@@ -1,6 +1,11 @@
 #include <iostream>
+#include "enumerable.hpp"
 
 int main() {
-  std::cout << "Hello World!" << std::endl;
+  int array[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  lazycoll::enumerable<int> en(array, 10);
+  for(int i : en){
+    std::cout << i << std::endl;
+  }
   return 0;
 }
