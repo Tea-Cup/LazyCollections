@@ -1,26 +1,22 @@
 CC=g++
-override FLAGS +=-std=c++17 -lstdc++
-override CFLAGS +=${FLAGS} -c -Wall
-override LDFLAGS +=${FLAGS}
+override FLAGS +=-std=c++17 -Wall
 SOURCES=main.cpp
-OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=binary
+TEST=test
 
-all: $(SOURCES) $(EXECUTABLE)
+.PHONY: test build
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+all: build
 
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+build:
+	$(CC) $(FLAGS) $(SOURCES) -o ${EXECUTABLE}
 
-.PHONY: test
 test:
-	g++ tests.cpp -o test
-	./test
+	${CC} tests.cpp -o ${TEST}
+	./${TEST}
 
 clean:
-	rm -rf *.o binary test
+	rm -rf ${EXECUTABLE} ${TEST}
 
 run:
-	./binary
+	./${EXECUTABLE}
