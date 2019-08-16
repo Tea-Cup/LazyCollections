@@ -14,8 +14,13 @@ $(EXECUTABLE): $(OBJECTS)
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 
+.PHONY: test
+test:
+	g++ tests.cpp -o test
+	./test
+
 clean:
-	rm -rf *.o binary
+	rm -rf *.o binary test
 
 run:
 	./binary
