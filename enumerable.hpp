@@ -12,46 +12,64 @@
 namespace lazycoll {
 
 template <class T>
+class Enumerable;
+
+template <class T>
 class Iterator : std::iterator<std::forward_iterator_tag, T> {
-  T* array;
-  const std::size_t size;
-  std::size_t index;
+  Enumerable<T> &en;
+  bool end;
 
  public:
-  Iterator(T* arr, const std::size_t size, const std::size_t index)
-      : array(arr), size(size), index(index) {}
+  Iterator(Enumerable<T> &en, bool end = false) : en(en), end(end) {
+    this->end = end || !en.moveNext();
+  }
 
-  Iterator& operator++() {
-    index++;
+  Iterator &operator++() {
+    end = !en.moveNext();
     return *this;
   }
-  Iterator operator++(int) { return Iterator<T>(array, size, index++); }
-  T& operator*() const { return array[index]; }
-  T& operator->() const { return array[index]; }
-  bool operator==(const Iterator& it) const { return index == it.index; }
-  bool operator!=(const Iterator& it) const { return index != it.index; }
+  Iterator operator++(int) {
+    end = !en.moveNext();
+    return *this;
+  }
+  T &operator*() const { return en.current(); }
+  T &operator->() const { return en.current(); }
+  bool operator==(const Iterator &it) const {
+    return en == it.en && end == it.end;
+  }
+  bool operator!=(const Iterator &it) const {
+    return en != it.en || end != it.end;
+  }
 };
 
-template <typename T>
+template <class T>
 class Enumerable {
  private:
-  T* array;
-  std::size_t size;
-  std::size_t index;
+  T *array;
+  long size;
+  long index;
 
  public:
-  Enumerable(T* arr, std::size_t size) : array(arr), size(size), index(-1) {}
+  Enumerable(T *arr, long size) : array(arr), size(size), index(-1) {}
 
-  T& current() const {
+  T &current() const {
     if (this->index < 0 || this->index >= this->size)
       throw std::out_of_range("Index out of range");
     return this->array[index];
   }
 
+  bool operator==(const Enumerable &p1) {
+    return array == p1.array && size == p1.size;
+  }
+
+  bool operator!=(const Enumerable &p1) {
+    return array != p1.array || size != p1.size;
+  }
+
   bool moveNext() { return ++this->index < this->size; }
 
-  Iterator<T> begin() { return Iterator<T>(array, size, 0); }
-  Iterator<T> end() { return Iterator<T>(array, size, size); }
+  Iterator<T> begin() { return Iterator<T>(*this); }
+  Iterator<T> end() { return Iterator<T>(*this, true); }
 };
 
 }  // namespace lazycoll
