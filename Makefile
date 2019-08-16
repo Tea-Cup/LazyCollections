@@ -1,6 +1,7 @@
 CC=gcc
-CFLAGS=-lstdc++ -c -Wall
-LDFLAGS=-lstdc++
+override FLAGS +=-lstdc++
+override CFLAGS +=${FLAGS} -c -Wall
+override LDFLAGS +=${FLAGS}
 SOURCES=main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=binary
