@@ -12,7 +12,7 @@ build:
 	$(CC) $(FLAGS) $(SOURCES) -o ${EXECUTABLE}
 
 test:
-	${CC} tests.cpp -o ${TEST}
+	${CC} ${FLAGS} tests/*.cpp -o ${TEST}
 	./${TEST}
 
 clean:
