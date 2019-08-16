@@ -1,5 +1,5 @@
-CC=gcc
-override FLAGS +=-lstdc++
+CC=g++
+override FLAGS +=-std=c++17 -lstdc++
 override CFLAGS +=${FLAGS} -c -Wall
 override LDFLAGS +=${FLAGS}
 SOURCES=main.cpp
